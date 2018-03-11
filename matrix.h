@@ -1,42 +1,54 @@
 #pragma once
 #include <vector>
 #include <map>
+#include <algorithm>
 #include "element.h"
+#include "proxy.h"
+
+template<class T>
+class RealElement;
+
 
 template<class T, T N>
 class Matrix{
-  using valueType = T;
-
 public:
-    Matrix() : proxyElement(N, this)
+    Matrix() : proxy(new Proxy<T, N>(this, 0)), defaultElement(new RealElement<T>(N))
     {};
 
+    Proxy<T, N> operator[](long x){
+        Proxy<T, N> p(this, x);
+        return p;
+    };
 
-    class ProxyElement{
-    public:
-        ProxyElement(valueType defaultValue_, Matrix<valueType, N> * matrixPtr_) : defaultValue(defaultValue_),
-            matrixPtr(matrixPtr_)
-        {};
+    size_t size(){
+        return matrix.size();
+    }
 
-        ProxyElement operator[](int y){
-            return *this;
-        };
+    RealElement<T>* getDefaultElement(){
+        return defaultElement;
+    };
 
-         operator valueType() const{
-            return defaultValue;
+    RealElement<T>* findByCoord(std::tuple<long, long> coordinates){
+        auto it = matrix.find(coordinates);
+        if( it == matrix.end()){
+            return defaultElement;
         }
-
-
-    private:
-        valueType defaultValue;
-        Matrix<valueType, N> *  matrixPtr;
+        else{
+            return it->second;
+        }
     };
 
-    ProxyElement * operator[](valueType x){
-        return &proxyElement;
+    void removeElement(std::pair<long, long> coordinates){
+        matrix.erase(matrix.find(coordinates));
     };
+
+    void insertElement(std::pair<long, long> coordinates, T value){
+        matrix.emplace(coordinates, new RealElement<T>(value));
+    }
+
 
 private:
-  ProxyElement proxyElement;
-  valueType defaultValue = N;
+  Proxy<T, N> * proxy;
+  RealElement<T> * defaultElement;
+  std::map<std::pair<long, long>, RealElement<T>* > matrix;
 };
