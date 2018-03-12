@@ -35,7 +35,6 @@ public:
         else{
             if(element != matrixPtr->getDefaultElement()){
                 matrixPtr->removeElement(coord);
-                //element == nullptr;
                 return;
             }
             else return;

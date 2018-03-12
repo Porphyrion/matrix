@@ -2,6 +2,7 @@
 #include <vector>
 #include <map>
 #include <algorithm>
+#include <tuple>
 #include "element.h"
 #include "proxy.h"
 
@@ -11,13 +12,15 @@ class RealElement;
 
 template<class T, T N>
 class Matrix{
+
+    using iteratorType = typename std::map<std::pair<long, long>, RealElement<T>* >::iterator;
 public:
-    Matrix() : proxy(new Proxy<T, N>(this, 0)), defaultElement(new RealElement<T>(N))
+    Matrix() : defaultElement(new RealElement<T>(N))
     {};
 
     Proxy<T, N> operator[](long x){
-        Proxy<T, N> p(this, x);
-        return p;
+        Proxy<T, N> proxy(this, x);
+        return proxy;
     };
 
     size_t size(){
@@ -44,11 +47,49 @@ public:
 
     void insertElement(std::pair<long, long> coordinates, T value){
         matrix.emplace(coordinates, new RealElement<T>(value));
-    }
+    };
+
+    class Iterator{
+    public:
+        Iterator(iteratorType  matrixIt_):iterator(matrixIt_){};
+
+        iteratorType getInsideIterator(){
+            return this->iterator;
+        }
+
+        void operator++(){
+            iterator++;
+        };
+
+        std::tuple<long, long, T> operator*(){
+            return std::make_tuple(iterator->first.first, iterator->first.second, iterator->second->getValue());
+        };
+
+        void operator--(){
+            iterator--;
+        }
+
+        bool operator !=(Iterator& other){
+            return iterator != other.getInsideIterator();
+        }
+
+        bool operator ==(Iterator& other){
+            return iterator == other.getInsideIterator();
+        }
+
+    private:
+        iteratorType  iterator;
+    };
 
 
+    Iterator begin(){
+        return Iterator(matrix.begin());
+    };
+
+    Iterator end(){
+        return Iterator(matrix.end());
+    };
 private:
-  Proxy<T, N> * proxy;
   RealElement<T> * defaultElement;
   std::map<std::pair<long, long>, RealElement<T>* > matrix;
 };

@@ -3,6 +3,7 @@
 #include <vector>
 #include <map>
 #include <cassert>
+#include <tuple>
 #include "element.h"
 #include "matrix.h"
 
@@ -18,8 +19,12 @@ matrix[100][100] = 314;
 assert(matrix[100][100] == 314);
 assert(matrix.size() == 1);
 
-for(auto i = 0; i<10;i++){
-    matrix[i][i] = 88;
+for(auto c : matrix){
+    int x;
+    int y;
+    int v;
+    std::tie(x, y, v) = c;
+    std::cout << x << y << v << std::endl;
 }
 
 
