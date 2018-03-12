@@ -13,7 +13,7 @@ class RealElement;
 template<class T, T N>
 class Matrix{
 
-    using iteratorType = typename std::map<std::pair<long, long>, RealElement<T>* >::iterator;
+    using IteratorType = typename std::map<std::pair<long, long>, RealElement<T>* >::iterator;
 public:
     Matrix() : defaultElement(new RealElement<T>(N))
     {};
@@ -31,6 +31,7 @@ public:
         return defaultElement;
     };
 
+    //поиск элемента
     RealElement<T>* findByCoord(std::tuple<long, long> coordinates){
         auto it = matrix.find(coordinates);
         if( it == matrix.end()){
@@ -41,19 +42,23 @@ public:
         }
     };
 
+    //удаление элемента
     void removeElement(std::pair<long, long> coordinates){
         matrix.erase(matrix.find(coordinates));
     };
 
+    //вставка элемента
     void insertElement(std::pair<long, long> coordinates, T value){
         matrix.emplace(coordinates, new RealElement<T>(value));
     };
 
+
+    //итератор
     class Iterator{
     public:
-        Iterator(iteratorType  matrixIt_):iterator(matrixIt_){};
+        Iterator(IteratorType  matrixIt_):iterator(matrixIt_){};
 
-        iteratorType getInsideIterator(){
+        IteratorType getInsideIterator(){
             return this->iterator;
         }
 
@@ -78,7 +83,7 @@ public:
         }
 
     private:
-        iteratorType  iterator;
+        IteratorType  iterator;
     };
 
 

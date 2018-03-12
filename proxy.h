@@ -19,7 +19,6 @@ public:
     Proxy& operator[](int y){
         coord = std::make_pair(x, y);
         element = matrixPtr->findByCoord(coord);
-
         return *this;
     };
 
@@ -39,7 +38,6 @@ public:
             }
             else return;
         }
-
     };
 
     operator T(){
