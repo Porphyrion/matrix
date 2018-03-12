@@ -11,6 +11,7 @@
 int main(int argc, char const *argv[]) {
 
     Matrix<int, 0> matrix;
+    
     assert(matrix.size() == 0);
     auto a = matrix[0][0];
     assert(a == 0);
@@ -27,8 +28,6 @@ int main(int argc, char const *argv[]) {
         matrix[i][i] = i;
     for (auto i = 0, j = 9; i < 10; i++, j--)
         matrix[i][j] = j;
-
-
 
     std::cout<<"size: "<<matrix.size()<<std::endl;
 
