@@ -35,7 +35,6 @@ int main(int argc, char const *argv[]) {
         std::cout<<"["<<x<<"]"<<"["<<y<<"]"<<" value: "<<v<< std::endl;
     }
 
-
     for(auto i = 1; i < 9; i++){
         for (auto j = 1; j < 9; j++){
             std::cout<<matrix[i][j]<<" ";
