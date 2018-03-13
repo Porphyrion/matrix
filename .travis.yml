@@ -1,6 +1,6 @@
 
 language: cpp
-# compiler: clang
+compiler: clang
 script:
 - cmake .
 - cmake --build .
