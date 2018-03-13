@@ -1,5 +1,4 @@
 #pragma once
-#include <vector>
 #include <map>
 #include <algorithm>
 #include <tuple>
@@ -21,7 +20,7 @@ public:
     ~Matrix(){
         delete defaultElement;
     }
-    
+
     Proxy<T, N> operator[](long x){
         Proxy<T, N> proxy(this, x);
         return proxy;
