@@ -35,7 +35,7 @@ public:
     };
 
     //поиск элемента
-    RealElement<T>* findByCoord(std::tuple<long, long> coordinates){
+    RealElement<T>* findByCoord(std::pair<long, long> coordinates){
         auto it = matrix.find(coordinates);
         if( it == matrix.end()){
             return defaultElement;
