@@ -12,7 +12,7 @@ set_target_properties(matrix PROPERTIES
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
 
-install(TARGETS Matrix RUNTIME DESTINATION bin)
+install(TARGETS matrix RUNTIME DESTINATION bin)
 
 set(CPACK_GENERATOR DEB)
 
