@@ -1,7 +1,5 @@
 #include <iostream>
 #include <string>
-#include <vector>
-#include <map>
 #include <cassert>
 #include <tuple>
 #include "element.h"
@@ -11,7 +9,7 @@
 int main(int argc, char const *argv[]) {
 
     Matrix<int, 0> matrix;
-    
+
     assert(matrix.size() == 0);
     auto a = matrix[0][0];
     assert(a == 0);
